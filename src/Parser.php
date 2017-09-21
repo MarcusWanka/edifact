@@ -73,7 +73,7 @@ class Parser
      *
      * @return Segment[]
      */
-    protected function convertTokensToSegments(array $tokens)
+    private function convertTokensToSegments(array $tokens)
     {
         $segments = [];
         $currentSegment = -1;

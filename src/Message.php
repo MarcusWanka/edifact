@@ -10,7 +10,7 @@ class Message
     /**
      * @var Segment[] $segments The segments that make up this message.
      */
-    protected $segments = [];
+    private $segments = [];
 
 
     /**

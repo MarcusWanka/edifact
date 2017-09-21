@@ -62,7 +62,7 @@ class Serializer
      *
      * @return string
      */
-    public function escape($string)
+    private function escape($string)
     {
         $characters = [
             $this->characters->getEscapeCharacter(),

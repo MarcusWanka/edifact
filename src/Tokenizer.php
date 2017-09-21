@@ -13,7 +13,7 @@ class Tokenizer
     /**
      * @var string $message The message that we are tokenizing.
      */
-    protected $message;
+    private $message;
 
     /**
      * @var ControlCharactersInterface $character The control characters for the message.
@@ -23,17 +23,17 @@ class Tokenizer
     /**
      * @var string|null $char The current character from the message we are dealing with.
      */
-    protected $char;
+    private $char;
 
     /**
      * @var string $string The stored characters for the next token.
      */
-    protected $string;
+    private $string;
 
     /**
      * @var bool $isEscaped If the current character has been esacped.
      */
-    protected $isEscaped = false;
+    private $isEscaped = false;
 
 
     /**
@@ -66,7 +66,7 @@ class Tokenizer
      *
      * @return void
      */
-    protected function readNextChar()
+    private function readNextChar()
     {
         $this->char = $this->getNextChar();
 
@@ -88,7 +88,7 @@ class Tokenizer
      *
      * @return void
      */
-    protected function getNextChar()
+    private function getNextChar()
     {
         $char = mb_substr($this->message, 0, 1);
         $this->message = mb_substr($this->message, 1);
@@ -102,7 +102,7 @@ class Tokenizer
      *
      * @return Token|null
      */
-    protected function getNextToken()
+    private function getNextToken()
     {
         if ($this->endOfMessage()) {
             return;
@@ -149,7 +149,7 @@ class Tokenizer
      *
      * @return bool
      */
-    protected function isControlCharacter()
+    private function isControlCharacter()
     {
         if ($this->isEscaped) {
             return false;
@@ -176,7 +176,7 @@ class Tokenizer
      *
      * @return void
      */
-    protected function storeCurrentCharAndReadNext()
+    private function storeCurrentCharAndReadNext()
     {
         $this->string .= $this->char;
         $this->readNextChar();
@@ -188,7 +188,7 @@ class Tokenizer
      *
      * @return string
      */
-    protected function extractStoredChars()
+    private function extractStoredChars()
     {
         $string = $this->string;
 
@@ -203,7 +203,7 @@ class Tokenizer
      *
      * @return void
      */
-    protected function endOfMessage()
+    private function endOfMessage()
     {
         return strlen($this->char) == 0;
     }
