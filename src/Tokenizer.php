@@ -2,17 +2,23 @@
 
 namespace Metroplex\Edifact;
 
+use Metroplex\Edifact\Control\Characters as ControlCharacters;
+use Metroplex\Edifact\Control\CharactersInterface as ControlCharactersInterface;
+
 /**
  * Convert EDI messages into tokens for parsing.
  */
 class Tokenizer
 {
-    use ControlCharacterTrait;
-
     /**
      * @var string $message The message that we are tokenizing.
      */
     protected $message;
+
+    /**
+     * @var ControlCharactersInterface $character The control characters for the message.
+     */
+    private $characters;
 
     /**
      * @var string|null $char The current character from the message we are dealing with.
@@ -37,9 +43,10 @@ class Tokenizer
      *
      * @return Token[]
      */
-    public function getTokens($message)
+    public function getTokens($message, ControlCharactersInterface $characters)
     {
         $this->message = $message;
+        $this->characters = $characters;
         $this->char = null;
         $this->string = "";
 
@@ -69,7 +76,7 @@ class Tokenizer
         }
 
         # If this is the escape character, then read the next one and flag the next as escaped
-        if ($this->char === $this->escapeCharacter) {
+        if ($this->char === $this->characters->getEscapeCharacter()) {
             $this->char = $this->getNextChar();
             $this->isEscaped = true;
         }
@@ -103,17 +110,17 @@ class Tokenizer
 
         # If we're not escaping this character then see if it's a control character
         if (!$this->isEscaped) {
-            if ($this->char === $this->componentSeparator) {
+            if ($this->char === $this->characters->getComponentSeparator()) {
                 $this->storeCurrentCharAndReadNext();
                 return new Token(Token::COMPONENT_SEPARATOR, $this->extractStoredChars());
             }
 
-            if ($this->char === $this->dataSeparator) {
+            if ($this->char === $this->characters->getDataSeparator()) {
                 $this->storeCurrentCharAndReadNext();
                 return new Token(Token::DATA_SEPARATOR, $this->extractStoredChars());
             }
 
-            if ($this->char === $this->segmentTerminator) {
+            if ($this->char === $this->characters->getSegmentTerminator()) {
                 $this->storeCurrentCharAndReadNext();
                 $token = new Token(Token::TERMINATOR, $this->extractStoredChars());
 
@@ -147,7 +154,20 @@ class Tokenizer
         if ($this->isEscaped) {
             return false;
         }
-        return in_array($this->char, [$this->componentSeparator, $this->dataSeparator, $this->segmentTerminator]);
+
+        if ($this->char === $this->characters->getComponentSeparator()) {
+            return true;
+        }
+
+        if ($this->char === $this->characters->getDataSeparator()) {
+            return true;
+        }
+
+        if ($this->char === $this->characters->getSegmentTerminator()) {
+            return true;
+        }
+
+        return false;
     }
 
 
