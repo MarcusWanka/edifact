@@ -10,8 +10,10 @@ class CompleteTest extends \PHPUnit_Framework_TestCase
     public function messageProvider()
     {
         $path = __DIR__ . "/data";
-        yield ["{$path}/wikipedia.edi"];
-        yield ["{$path}/order.edi"];
+        return [
+        	["{$path}/wikipedia.edi"],
+         	["{$path}/order.edi"]
+		];
     }
     /**
      * @dataProvider messageProvider

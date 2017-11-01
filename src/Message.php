@@ -78,11 +78,13 @@ class Message
      */
     public function getSegments($name)
     {
+    	$segments = [];
         foreach ($this->getAllSegments() as $segment) {
             if ($segment->getName() === $name) {
-                yield $segment;
+				$segments[] = $segment;
             }
         }
+        return $segments;
     }
 
 

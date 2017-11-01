@@ -24,7 +24,7 @@ class Segment
      * @param string $name The name of the segment.
      * @param array $elements The data elements for this segment.
      */
-    public function __construct($name, ...$elements)
+    public function __construct($name, $elements)
     {
         $this->name = $name;
         $this->elements = $elements;

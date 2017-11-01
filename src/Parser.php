@@ -147,9 +147,12 @@ class Parser
             }
         }
 
+        $result = [];
         foreach ($segments as $segment) {
             $name = array_shift($segment);
-            yield new Segment($name, ...$segment);
+            $result[] = new Segment($name, $segment);
         }
+
+        return $result;
     }
 }
