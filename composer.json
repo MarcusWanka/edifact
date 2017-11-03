@@ -1,5 +1,5 @@
 {
-    "name": "metroplex-systems/edifact",
+    "name": "MarcusWanka/edifact",
     "type": "library",
     "description": "Parser and Serializer for UN/EDIFACT messages",
     "keywords": ["edi", "edifact", "parser", "serializer"],
