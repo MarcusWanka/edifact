@@ -1,5 +1,5 @@
 {
-    "name": "MarcusWanka/edifact",
+    "name": "mwanka/edifact",
     "type": "library",
     "description": "Parser and Serializer for UN/EDIFACT messages",
     "keywords": ["edi", "edifact", "parser", "serializer"],
